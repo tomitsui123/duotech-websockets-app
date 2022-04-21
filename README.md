@@ -1,6 +1,6 @@
-# simple-websockets-chat-app
+# duotech-websockets-app
 
-This is the code and template for the simple-websocket-chat-app.  There are three functions contained within the directories and a SAM template that wires them up to a DynamoDB table and provides the minimal set of permissions needed to run the app:
+This is the code and template for the duotech-websockets-app.  There are three functions contained within the directories and a SAM template that wires them up to a DynamoDB table and provides the minimal set of permissions needed to run the app:
 
 ```
 .
@@ -18,7 +18,7 @@ You have two choices for how you can deploy this code.
 
 ## Serverless Application Repository
 
-The first and fastest way is to use AWS's Serverless Application Respository to directly deploy the components of this app into your account without needing to use any additional tools. You'll be able to review everything before it deploys to make sure you understand what will happen.  Click through to see the [application details](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:729047367331:applications~simple-websockets-chat-app).
+The first and fastest way is to use AWS's Serverless Application Respository to directly deploy the components of this app into your account without needing to use any additional tools. You'll be able to review everything before it deploys to make sure you understand what will happen.  Click through to see the [application details](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:729047367331:applications~duotech-websockets-app).
 
 ## AWS CLI commands
 
@@ -28,12 +28,12 @@ If you prefer, you can install the [AWS SAM CLI](https://docs.aws.amazon.com/ser
 sam deploy --guided
 
 aws cloudformation describe-stacks \
-    --stack-name simple-websocket-chat-app --query 'Stacks[].Outputs'
+    --stack-name duotech-websockets-app --query 'Stacks[].Outputs'
 ```
 
 **Note:** `.gitignore` contains the `samconfig.toml`, hence make sure backup this file, or modify your .gitignore locally.
 
-## Testing the chat API
+## Testing the app API
 
 To test the WebSocket API, you can use [wscat](https://github.com/websockets/wscat), an open-source command line tool.
 
