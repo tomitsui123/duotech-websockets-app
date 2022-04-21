@@ -11,15 +11,24 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 const { TABLE_NAME } = process.env
 
 exports.handler = async (event) => {
-
   let connectionData
+  const { message, tenantId } = JSON.parse(event.body).data
   try {
-    connectionData = await ddb
-      .scan({ TableName: TABLE_NAME, ProjectionExpression: "connectionId" })
-      .promise();
+    const params = {
+      TableName: TABLE_NAME,
+      KeyConditionExpression: 'tenantId =:tenantId',
+      ExpressionAttributeValues: {
+        ':tenantId': tenantId,
+      },
+    }
+    connectionData = await ddb.query(params).promise()
   } catch (e) {
     return { statusCode: 500, body: e.stack }
   }
+  console.log('==============================1==========================')
+  console.log('socket send message')
+  console.log({ message, tenantId })
+  console.log('==============================3==========================')
 
   const apigwManagementApi = new AWS.ApiGatewayManagementApi({
     apiVersion: "2018-11-29",
