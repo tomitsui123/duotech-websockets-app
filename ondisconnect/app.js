@@ -19,6 +19,7 @@ exports.handler = async (event) => {
     TableName: process.env.TABLE_NAME,
     Key: {
       tenantId: 1,
+      connectionId: event.requestContext.connectionId,
     },
   };
 
