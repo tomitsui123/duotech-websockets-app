@@ -12,6 +12,7 @@ exports.handler = async (event) => {
   const putParams = {
     TableName: process.env.TABLE_NAME,
     Item: {
+      tenantId: 1,
       connectionId: event.requestContext.connectionId,
     },
   };

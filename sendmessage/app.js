@@ -27,12 +27,14 @@ exports.handler = async (event) => {
       event.requestContext.domainName + "/" + event.requestContext.stage,
   });
 
-  const postData = JSON.parse(event.body).data;
+  const { message, tenantId } = JSON.parse(event.body).data;
 
-  const postCalls = connectionData.Items.map(async ({ connectionId }) => {
+  const postCalls = connectionData.Items.filter(
+    (item) => item.tenantId === tenantId
+  ).map(async ({ connectionId }) => {
     try {
       await apigwManagementApi
-        .postToConnection({ ConnectionId: connectionId, Data: postData })
+        .postToConnection({ ConnectionId: connectionId, Data: message })
         .promise();
     } catch (e) {
       if (e.statusCode === 410) {
