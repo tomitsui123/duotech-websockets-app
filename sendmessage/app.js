@@ -12,8 +12,8 @@ const { TABLE_NAME } = process.env
 
 exports.handler = async (event) => {
   let connectionData
+  const { message, tenantId } = JSON.parse(event.body).data
   try {
-    const { message, tenantId } = JSON.parse(event.body).data
     const params = {
       TableName: TABLE_NAME,
       KeyConditionExpression: 'tenantId =:tenantId',
@@ -36,11 +36,10 @@ exports.handler = async (event) => {
       event.requestContext.domainName + "/" + event.requestContext.stage,
   });
 
-  const { message, tenantId } = JSON.parse(event.body).data;
-
   const postCalls = connectionData.Items.filter(
     (item) => item.tenantId === tenantId
   ).map(async ({ connectionId }) => {
+    console.log({ message, tenantId })
     try {
       await apigwManagementApi
         .postToConnection({ ConnectionId: connectionId, Data: message })
