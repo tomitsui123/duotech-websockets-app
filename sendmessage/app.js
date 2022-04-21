@@ -12,8 +12,8 @@ const { TABLE_NAME } = process.env
 
 exports.handler = async (event) => {
   let connectionData
-  const { message, tenantId } = JSON.parse(event.body).data
   try {
+    const { message, tenantId } = JSON.parse(event.body).data
     const params = {
       TableName: TABLE_NAME,
       KeyConditionExpression: 'tenantId =:tenantId',
