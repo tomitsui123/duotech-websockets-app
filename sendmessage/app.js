@@ -12,7 +12,7 @@ const { TABLE_NAME } = process.env
 
 exports.handler = async (event) => {
   let connectionData
-  const { message, tenantId } = JSON.parse(event.body).data
+  const { message, tenantId, command } = JSON.parse(event.body).data
   try {
     const params = {
       TableName: TABLE_NAME,
@@ -34,7 +34,7 @@ exports.handler = async (event) => {
     apiVersion: "2018-11-29",
     endpoint:
       event.requestContext.domainName + "/" + event.requestContext.stage,
-  });
+  })
 
   const postCalls = connectionData.Items.filter(
     (item) => item.tenantId === tenantId

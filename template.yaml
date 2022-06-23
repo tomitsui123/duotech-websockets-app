@@ -6,16 +6,6 @@ Description: >
   SAM Template for duotech-websockets-app that has the DynamoDB table and Lambda
   functions needed to use the Websocket protocol on API Gateway.
 
-Parameters:
-  TableName:
-    Type: String
-    Default: 'tenant_connections'
-    Description: (Required) The name of the new DynamoDB to store connection identifiers for each connected clients. Minimum 3 characters
-    MinLength: 3
-    MaxLength: 50
-    AllowedPattern: ^[A-Za-z_]+$
-    ConstraintDescription: 'Required. Can be characters and underscore only. No numbers or special characters allowed.'
-
 Resources:
   DuotechTenantWebSocket:
     Type: AWS::ApiGatewayV2::Api
@@ -116,7 +106,7 @@ Resources:
         WriteCapacityUnits: 5
       SSESpecification:
         SSEEnabled: True
-      TableName: !Ref TableName
+      TableName: tenant_connection
   OnConnectFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -126,10 +116,10 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          TABLE_NAME: tenant_connection
       Policies:
       - DynamoDBCrudPolicy:
-          TableName: !Ref TableName
+          TableName: tenant_connection
   OnConnectPermission:
     Type: AWS::Lambda::Permission
     DependsOn:
@@ -147,10 +137,10 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          TABLE_NAME: tenant_connection
       Policies:
       - DynamoDBCrudPolicy:
-          TableName: !Ref TableName
+          TableName: tenant_connection
   OnDisconnectPermission:
     Type: AWS::Lambda::Permission
     DependsOn:
@@ -168,10 +158,10 @@ Resources:
       Runtime: nodejs12.x
       Environment:
         Variables:
-          TABLE_NAME: !Ref TableName
+          TABLE_NAME: tenant_connection
       Policies:
       - DynamoDBCrudPolicy:
-          TableName: !Ref TableName
+          TableName: tenant_connection
       - Statement:
         - Effect: Allow
           Action:
