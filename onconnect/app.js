@@ -9,23 +9,21 @@ const ddb = new AWS.DynamoDB.DocumentClient({
 })
 
 exports.handler = async (event) => {
-  const { tenant_id } = event.queryStringParameters
-  const putParams = {
-    TableName: process.env.TABLE_NAME,
-    Item: {
-      tenantId: tenant_id,
-      connectionId: event.requestContext.connectionId,
-    },
-  }
-
-  try {
-    await ddb.put(putParams).promise()
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: "Failed to connect: " + JSON.stringify(err),
-    }
-  }
+  // try {
+  //   const putParams = {
+  //     TableName: process.env.TABLE_NAME,
+  //     Item: {
+  //       tenantId: tenant_id,
+  //       connectionId: event.requestContext.connectionId,
+  //     },
+  //   }
+  //   await ddb.put(putParams).promise()
+  // } catch (err) {
+  //   return {
+  //     statusCode: 500,
+  //     body: "Failed to connect: " + JSON.stringify(err),
+  //   }
+  // }
 
   return { statusCode: 200, body: "Connected." }
 }

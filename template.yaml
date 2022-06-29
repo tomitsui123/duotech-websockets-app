@@ -88,25 +88,6 @@ Resources:
       Description: Prod Stage
       DeploymentId: !Ref Deployment
       ApiId: !Ref DuotechTenantWebSocket
-  ConnectionsTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      AttributeDefinitions:
-      - AttributeName: tenantId
-        AttributeType: N
-      - AttributeName: connectionId
-        AttributeType: S
-      KeySchema:
-      - AttributeName: tenantId
-        KeyType: "HASH"
-      - AttributeName: connectionId
-        KeyType: "RANGE"
-      ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      SSESpecification:
-        SSEEnabled: True
-      TableName: tenant_connection
   OnConnectFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -178,9 +159,6 @@ Resources:
       Principal: apigateway.amazonaws.com
 
 Outputs:
-  ConnectionsTableArn:
-    Description: "Connections table ARN"
-    Value: !GetAtt ConnectionsTable.Arn
 
   OnConnectFunctionArn:
     Description: "OnConnect function ARN"
